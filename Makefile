@@ -11,11 +11,11 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CFLAGS := $(INC_FLAGS)
-CFLAGS += -MMD -MP 
-CFLAGS += -Wall -Wextra -pedantic 
+CFLAGS := -Wall -Wextra -pedantic 
 CFLAGS += -std=c99
 CFLAGS += -g3
+CFLAGS += $(INC_FLAGS)
+CFLAGS += -MMD -MP 
 
 LDLIBS := -lSDL2 -lSDL2_image
 
@@ -32,12 +32,13 @@ run: $(BUILD_DIR)/$(TARGET_EXEC)
 # Linking
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	@echo "Linking"
-	@$(CC) $(OBJS) -o $@ $(LDFLAGS) $(LDLIBS)
+	@$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
+# Compiling
 $(BUILD_DIR)/%.c.o: %.c
 	@echo "Compiling $<"
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean: 
@@ -47,5 +48,12 @@ clean:
 .PHONY: format
 format:
 	clang-format -i $(SRCS)
+
+# aliases
+.PHONY: b r f c
+b: build
+r: run
+f: format
+c: clean
 
 -include $(DEPS)
