@@ -1,25 +1,51 @@
-EXEC = VimTrainer
+# Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
+TARGET_EXEC := VimSnake
 
-SRC = src/main.c
+BUILD_DIR := ./build
+SRC_DIRS := ./src
 
-CC = clang
-CFLAGS = -Wall -Wextra
-# CFLAGS += -Werror
+SRCS := $(shell find $(SRC_DIRS) -name '*.c')
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 
-LDLIBS = -lSDL2 -lSDL2_image
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-run: $(EXEC)
-	./$(EXEC)
+CFLAGS := $(INC_FLAGS)
+CFLAGS += -MMD -MP 
+CFLAGS += -Wall -Wextra -pedantic 
+CFLAGS += -std=c99
+CFLAGS += -g3
 
-$(EXEC): $(SRC)
-	$(CC) $(CFLAGS)  -o $(EXEC) $(SRC) $(LDLIBS)
+LDLIBS := -lSDL2 -lSDL2_image
 
-clean:
-	rm -rf $(EXEC)
+all: build
 
-re: clean $(EXEC)
+.PHONY: build
+build: $(BUILD_DIR)/$(TARGET_EXEC)
 
-fmt:
-	clang-format -i $(shell find src -name '*.c')
+.PHONY: run
+run: $(BUILD_DIR)/$(TARGET_EXEC)
+	@echo "\nrunning $^ !\n"
+	@./$^
 
-.PHONY: run clean re fmt
+# Linking
+$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+	@echo "Linking"
+	@$(CC) $(OBJS) -o $@ $(LDFLAGS) $(LDLIBS)
+
+$(BUILD_DIR)/%.c.o: %.c
+	@echo "Compiling $<"
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(CFLAGS) -c $< -o $@
+
+.PHONY: clean
+clean: 
+	@echo "Clean up"
+	@$(RM) -r $(BUILD_DIR) $(T_BUILD_DIR)
+
+.PHONY: format
+format:
+	clang-format -i $(SRCS)
+
+-include $(DEPS)
