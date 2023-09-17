@@ -9,6 +9,8 @@
 
 #define TARGET_FPS 100
 
+#define TILE_SIZE 50
+
 #define NICE_BLUE 33, 118, 174, 255
 
 #define BLOCK_PNG_PATH "./assets/kenney_pixel-shmup/Tiles/tile_0110.png"
@@ -20,14 +22,17 @@ int main(void)
     Screen screen = Screen(WIDTH, HEIGHT);
 
     Sprite block = Sprite(BLOCK_PNG_PATH, &screen);
+    block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
     Snake snake = Snake(TilePosition(0, 0), &block);
+    snake.set_direction(Direction::Down);
 
     const PixelDimension grid_size = block.m_dimension;
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
     bool running = true;
+    uint64_t frame_count = 1;
 
     while (running)
     {
@@ -39,6 +44,29 @@ int main(void)
                 running = false;
                 break;
             }
+            if (event.type == SDL_KEYDOWN)
+            {
+                switch (event.key.keysym.sym)
+                {
+                    case SDLK_h:
+                        snake.set_direction(Direction::Left);
+                        break;
+                    case SDLK_j:
+                        snake.set_direction(Direction::Down);
+                        break;
+                    case SDLK_k:
+                        snake.set_direction(Direction::Up);
+                        break;
+                    case SDLK_l:
+                        snake.set_direction(Direction::Right);
+                        break;
+                }
+            }
+        }
+
+        if (frame_count % 50 == 0)
+        {
+            snake.advance();
         }
 
         SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
@@ -49,6 +77,7 @@ int main(void)
         screen.show();
 
         cap_fps(frame_beginning_tick, TARGET_FPS);
+        frame_count++;
     }
 
     SDL_Quit();
