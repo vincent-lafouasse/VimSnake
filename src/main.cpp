@@ -11,17 +11,19 @@
 
 #define NICE_BLUE 33, 118, 174, 255
 
+#define BLOCK_PNG_PATH "./assets/kenney_pixel-shmup/Tiles/tile_0110.png"
+
 void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
     Screen screen = Screen(WIDTH, HEIGHT);
 
-    Sprite crab = Sprite("assets/crab.png", &screen);
+    Sprite block = Sprite(BLOCK_PNG_PATH, &screen);
 
-    Snake snake = Snake(TilePosition(0, 0), &crab);
+    Snake snake = Snake(TilePosition(0, 0), &block);
 
-    const PixelDimension grid_size = crab.m_dimension;
+    const PixelDimension grid_size = block.m_dimension;
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
