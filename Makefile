@@ -4,18 +4,21 @@ TARGET_EXEC := VimSnake
 BUILD_DIR := ./build
 SRC_DIRS := ./src
 
-SRCS := $(shell find $(SRC_DIRS) -name '*.c')
+SRCS := $(shell find $(SRC_DIRS) -name '*.c' -or -name '*.cpp')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
+CC = clang
 CFLAGS := -Wall -Wextra -pedantic 
-CFLAGS += -std=c99
 CFLAGS += -g3
 CFLAGS += $(INC_FLAGS)
 CFLAGS += -MMD -MP 
+
+CXX = clang++
+CXXFLAGS = $(CFLAGS)
 
 LDLIBS := -lSDL2 -lSDL2_image
 
@@ -34,7 +37,13 @@ $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	@echo "Linking"
 	@$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
-# Compiling
+# Compiling C++
+$(BUILD_DIR)/%.cpp.o: %.cpp
+	@echo "Compiling $<"
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compiling C
 $(BUILD_DIR)/%.c.o: %.c
 	@echo "Compiling $<"
 	@mkdir -p $(dir $@)
