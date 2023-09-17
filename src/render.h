@@ -7,21 +7,21 @@
 #define HEIGHT 600
 #define WIDTH 800
 
-typedef struct {
+struct Screen {
   SDL_Window* window;
   SDL_Renderer* renderer;
-} Screen;
+};
 
 Screen init_renderer(void);
 void show(Screen screen);
 void free_screen(Screen screen);
 
-typedef struct {
+struct Sprite {
   SDL_Surface* surface;
   SDL_Texture* texture;
   int width;
   int height;
-} Sprite;
+};
 
 Sprite sprite_from_png(const char* png_path, Screen screen);
 void render_sprite(Sprite sprite, int x, int y, Screen screen);
