@@ -7,26 +7,30 @@
 #define HEIGHT 600
 #define WIDTH 800
 
-struct Screen
+class Screen
 {
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+   public:
+    SDL_Window* m_window;
+    SDL_Renderer* m_renderer;
+
+    Screen(void);
+    ~Screen(void);
+
+    void show(void);
 };
 
-Screen init_renderer(void);
-void show(Screen screen);
-void free_screen(Screen screen);
-
-struct Sprite
+class Sprite
 {
-    SDL_Surface* surface;
-    SDL_Texture* texture;
-    int width;
-    int height;
-};
+   public:
+    SDL_Surface* m_surface;
+    SDL_Texture* m_texture;
+    int m_width;
+    int m_height;
 
-Sprite sprite_from_png(const char* png_path, Screen screen);
-void render_sprite(Sprite sprite, int x, int y, Screen screen);
-void free_sprite(Sprite sprite);
+    Sprite(const char* png_path, Screen* screen);
+    ~Sprite();
+
+    void render(int x, int y, Screen* screen);
+};
 
 #endif
