@@ -21,8 +21,7 @@ int main(void)
 
     Snake snake = Snake(TilePosition(0, 0), &crab);
 
-    const PixelDimension grid_size =
-        PixelDimension(crab.m_width, crab.m_height);
+    const PixelDimension grid_size = crab.m_dimension;
 
     SDL_Event event;
     uint32_t frame_beginning_tick;

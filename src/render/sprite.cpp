@@ -4,8 +4,7 @@ Sprite::Sprite()
 {
     m_surface = nullptr;
     m_texture = nullptr;
-    m_height = 0;
-    m_width = 0;
+    m_dimension = PixelDimension(0, 0);
 }
 
 Sprite::Sprite(const char* png_path, Screen* screen)
@@ -16,13 +15,13 @@ Sprite::Sprite(const char* png_path, Screen* screen)
     m_texture = SDL_CreateTextureFromSurface(screen->m_renderer, m_surface);
     SDL_QueryTexture(m_texture, NULL, NULL, &width, &height);
 
-    m_height = height;
-    m_width = width;
+    m_dimension.w = width;
+    m_dimension.h = height;
 }
 
 void Sprite::render(PixelPosition position, Screen* screen)
 {
-    SDL_Rect dst_rect = {position.x, position.y, m_width, m_height};
+    SDL_Rect dst_rect = {position.x, position.y, m_dimension.w, m_dimension.h};
     SDL_RenderCopy(screen->m_renderer, m_texture, NULL, &dst_rect);
 }
 

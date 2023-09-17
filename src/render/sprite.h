@@ -12,8 +12,7 @@ class Sprite
    public:
     SDL_Surface* m_surface;
     SDL_Texture* m_texture;
-    int m_width;
-    int m_height;
+    PixelDimension m_dimension;
 
     Sprite();
     Sprite(const char* png_path, Screen* screen);
