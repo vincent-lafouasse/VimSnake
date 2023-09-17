@@ -10,6 +10,7 @@ DEPS := $(OBJS:.o=.d)
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+HEADERS = $(shell find $(SRC_DIRS) -name '*.h')
 
 CC = clang
 CFLAGS := -Wall -Wextra -pedantic 
@@ -57,6 +58,7 @@ clean:
 .PHONY: format
 format:
 	clang-format -i $(SRCS)
+	clang-format -i $(HEADERS)
 
 # aliases
 .PHONY: b r f c
