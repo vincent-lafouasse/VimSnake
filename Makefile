@@ -1,8 +1,9 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
-TARGET_EXEC := VimSnake
+TARGET_NAME := VimSnake
 
 BUILD_DIR := ./build
 SRC_DIRS := ./src
+TARGET = $(BUILD_DIR)/$(TARGET_NAME)
 
 SRCS := $(shell find $(SRC_DIRS) -name '*.c' -or -name '*.cpp')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
@@ -26,25 +27,28 @@ LDLIBS := -lSDL2 -lSDL2_image
 all: build
 
 .PHONY: build
-build: $(BUILD_DIR)/$(TARGET_EXEC)
+build: $(TARGET)
 
 .PHONY: run
-run: $(BUILD_DIR)/$(TARGET_EXEC)
+run: $(TARGET)
 	@echo "\nrunning $^ !\n"
 	@./$^
 
+.PHONY: re
+re: clean update
+
 # Linking
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+$(TARGET): $(OBJS)
 	@echo "Linking"
 	@$(CXX) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
-# Compiling C++
+# Compile C++
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	@echo "Compiling $<"
 	@mkdir -p $(dir $@)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Compiling C
+# Compile C
 $(BUILD_DIR)/%.c.o: %.c
 	@echo "Compiling $<"
 	@mkdir -p $(dir $@)
@@ -53,7 +57,7 @@ $(BUILD_DIR)/%.c.o: %.c
 .PHONY: clean
 clean: 
 	@echo "Clean up"
-	@$(RM) -r $(BUILD_DIR) $(T_BUILD_DIR)
+	@$(RM) -r $(BUILD_DIR)
 
 .PHONY: format
 format:
