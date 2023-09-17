@@ -1,6 +1,14 @@
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
+enum class Direction
+{
+    Up,
+    Down,
+    Right,
+    Left,
+};
+
 class Dimension
 {
    public:
