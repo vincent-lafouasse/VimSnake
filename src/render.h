@@ -10,11 +10,11 @@
 typedef struct {
   SDL_Window* window;
   SDL_Renderer* renderer;
-} GameRenderer;
+} Screen;
 
-GameRenderer init_renderer(void);
-void show(GameRenderer game_renderer);
-void free_game_renderer(GameRenderer game_renderer);
+Screen init_renderer(void);
+void show(Screen screen);
+void free_screen(Screen screen);
 
 typedef struct {
   SDL_Surface* surface;
@@ -23,8 +23,8 @@ typedef struct {
   int height;
 } Sprite;
 
-Sprite sprite_from_png(const char* png_path, GameRenderer game_renderer);
-void render_sprite(Sprite sprite, int x, int y, GameRenderer game_renderer);
+Sprite sprite_from_png(const char* png_path, Screen screen);
+void render_sprite(Sprite sprite, int x, int y, Screen screen);
 void free_sprite(Sprite sprite);
 
 #endif

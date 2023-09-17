@@ -14,9 +14,9 @@ void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
-    GameRenderer game_renderer = init_renderer();
+    Screen screen = init_renderer();
 
-    Sprite crab = sprite_from_png("src/crab.png", game_renderer);
+    Sprite crab = sprite_from_png("src/crab.png", screen);
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
@@ -34,18 +34,18 @@ int main(void)
             }
         }
 
-        SDL_SetRenderDrawColor(game_renderer.renderer, NICE_BLUE);
-        SDL_RenderClear(game_renderer.renderer);
+        SDL_SetRenderDrawColor(screen.renderer, NICE_BLUE);
+        SDL_RenderClear(screen.renderer);
 
-        render_sprite(crab, 0, 0, game_renderer);
+        render_sprite(crab, 0, 0, screen);
 
-        show(game_renderer);
+        show(screen);
 
         cap_fps(frame_beginning_tick, TARGET_FPS);
     }
 
     free_sprite(crab);
-    free_game_renderer(game_renderer);
+    free_screen(screen);
     SDL_Quit();
     return (EXIT_SUCCESS);
 }
