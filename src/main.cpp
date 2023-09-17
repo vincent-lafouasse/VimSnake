@@ -14,7 +14,7 @@ void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
-    Screen screen = Screen();
+    Screen screen = Screen(WIDTH, HEIGHT);
 
     Sprite crab = Sprite("assets/crab.png", &screen);
 
