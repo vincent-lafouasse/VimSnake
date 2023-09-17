@@ -16,7 +16,7 @@ int main(void)
 {
     Screen screen = Screen();
 
-    Sprite crab = Sprite("src/crab.png", &screen);
+    Sprite crab = Sprite("assets/crab.png", &screen);
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
