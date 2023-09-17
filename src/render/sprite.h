@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "geometry.h"
 #include "screen.h"
 
 class Sprite
@@ -17,7 +18,7 @@ class Sprite
     Sprite(const char* png_path, Screen* screen);
     ~Sprite();
 
-    void render(int x, int y, Screen* screen);
+    void render(PixelPosition position, Screen* screen);
 };
 
 #endif

@@ -21,6 +21,7 @@ CFLAGS += -MMD -MP
 
 CXX = clang++
 CXXFLAGS = $(CFLAGS)
+CXXFLAGS += -std=c++17
 
 LDLIBS := -lSDL2 -lSDL2_image
 

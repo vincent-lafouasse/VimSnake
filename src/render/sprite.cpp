@@ -12,9 +12,9 @@ Sprite::Sprite(const char* png_path, Screen* screen)
     m_width = width;
 }
 
-void Sprite::render(int x, int y, Screen* screen)
+void Sprite::render(PixelPosition position, Screen* screen)
 {
-    SDL_Rect dst_rect = {x, y, m_width, m_height};
+    SDL_Rect dst_rect = {position.x, position.y, m_width, m_height};
     SDL_RenderCopy(screen->m_renderer, m_texture, NULL, &dst_rect);
 }
 

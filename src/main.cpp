@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "geometry.h"
 #include "render.h"
 
 #define TARGET_FPS 100
@@ -37,7 +38,7 @@ int main(void)
         SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
         SDL_RenderClear(screen.m_renderer);
 
-        crab.render(0, 0, &screen);
+        crab.render(PixelPosition(0, 0), &screen);
 
         screen.show();
 
