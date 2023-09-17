@@ -1,4 +1,3 @@
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -6,6 +5,7 @@
 
 #include "geometry.h"
 #include "render.h"
+#include "snake.h"
 
 #define TARGET_FPS 100
 
@@ -18,6 +18,11 @@ int main(void)
     Screen screen = Screen(WIDTH, HEIGHT);
 
     Sprite crab = Sprite("assets/crab.png", &screen);
+
+    Snake snake = Snake(TilePosition(0, 0), &crab);
+
+    const PixelDimension grid_size =
+        PixelDimension(crab.m_width, crab.m_height);
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
@@ -38,7 +43,7 @@ int main(void)
         SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
         SDL_RenderClear(screen.m_renderer);
 
-        crab.render(PixelPosition(0, 0), &screen);
+        snake.render(&screen, grid_size);
 
         screen.show();
 
