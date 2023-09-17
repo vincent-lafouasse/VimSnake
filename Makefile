@@ -36,7 +36,7 @@ run: $(BUILD_DIR)/$(TARGET_EXEC)
 # Linking
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	@echo "Linking"
-	@$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
+	@$(CXX) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 # Compiling C++
 $(BUILD_DIR)/%.cpp.o: %.cpp
