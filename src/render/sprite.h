@@ -15,6 +15,7 @@ class Sprite
     int m_width;
     int m_height;
 
+    Sprite();
     Sprite(const char* png_path, Screen* screen);
     ~Sprite();
 

@@ -1,5 +1,13 @@
 #include "sprite.h"
 
+Sprite::Sprite()
+{
+    m_surface = nullptr;
+    m_texture = nullptr;
+    m_height = 0;
+    m_width = 0;
+}
+
 Sprite::Sprite(const char* png_path, Screen* screen)
 {
     int width, height;
