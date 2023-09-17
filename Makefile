@@ -60,11 +60,18 @@ format:
 	clang-format -i $(SRCS)
 	clang-format -i $(HEADERS)
 
+.PHONY: update
+update:
+	make clean
+	mkdir -p $(BUILD_DIR)
+	bear --output $(BUILD_DIR)/compile_commands.json -- make b
+
 # aliases
-.PHONY: b r f c
+.PHONY: b r f c u
 b: build
 r: run
 f: format
 c: clean
+u: update
 
 -include $(DEPS)
