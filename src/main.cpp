@@ -13,7 +13,8 @@
 
 #define NICE_BLUE 33, 118, 174, 255
 
-#define BLOCK_PNG_PATH "./assets/kenney_pixel-shmup/Tiles/tile_0110.png"
+#define GREEN_TILE_PNG "./assets/kenney_pixel-shmup/Tiles/tile_0110.png"
+#define BROWN_TILE_PNG "./assets/kenney_pixel-shmup/Tiles/tile_0116.png"
 
 void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
@@ -21,13 +22,16 @@ int main(void)
 {
     Screen screen = Screen(WIDTH, HEIGHT);
 
-    Sprite block = Sprite(BLOCK_PNG_PATH, &screen);
-    block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
+    Sprite green_block = Sprite(GREEN_TILE_PNG, &screen);
+    green_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
-    Snake snake = Snake(TilePosition(0, 0), &block);
+    Sprite brown_block = Sprite(BROWN_TILE_PNG, &screen);
+    brown_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
+
+    Snake snake = Snake(TilePosition(0, 0), &green_block, &brown_block);
     snake.set_direction(Direction::Down);
 
-    const PixelDimension grid_size = block.m_dimension;
+    const PixelDimension grid_size = green_block.m_dimension;
 
     SDL_Event event;
     uint32_t frame_beginning_tick;

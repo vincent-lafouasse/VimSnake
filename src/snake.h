@@ -9,7 +9,7 @@
 class Snake
 {
    public:
-    Snake(TilePosition start, Sprite* sprite);
+    Snake(TilePosition start, Sprite* head, Sprite* body);
 
     void advance(void);
     void set_direction(Direction direction);
@@ -18,7 +18,8 @@ class Snake
    private:
     Direction m_direction;
     std::deque<TilePosition> m_body;
-    Sprite* m_sprite;
+    Sprite* m_head_sprite;
+    Sprite* m_body_sprite;
 };
 
 #endif

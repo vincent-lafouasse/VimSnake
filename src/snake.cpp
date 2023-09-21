@@ -35,10 +35,11 @@ void Snake::advance(void)
     // m_body.pop_back();
 }
 
-Snake::Snake(TilePosition start, Sprite* sprite)
+Snake::Snake(TilePosition start, Sprite* head, Sprite* body)
 {
     m_body.push_front(start);
-    m_sprite = sprite;
+    m_head_sprite = head;
+    m_body_sprite = body;
     set_direction(Direction::Up);
 }
 
@@ -56,7 +57,16 @@ void Snake::render(Screen* screen, PixelDimension tile_size)
     {
         px_pos.x = it->x * tile_size.w;
         px_pos.y = it->y * tile_size.h;
-        m_sprite->render(px_pos, screen);
+        m_body_sprite->render(px_pos, screen);
         it++;
+    }
+
+    auto head = m_body.begin();
+    PixelPosition head_pos;
+    if (head != m_body.end())
+    {
+        head_pos.x = head->x * tile_size.w;
+        head_pos.y = head->y * tile_size.h;
+        m_head_sprite->render(head_pos, screen);
     }
 }
