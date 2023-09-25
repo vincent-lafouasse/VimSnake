@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#define START_LEN 3
+
 void Snake::advance(void)
 {
     TilePosition delta = TilePosition(0, 0);
@@ -34,7 +36,9 @@ void Snake::advance(void)
     TilePosition new_head =
         TilePosition(old_head.x + delta.x, old_head.y + delta.y);
     m_body.push_front(new_head);
-    // m_body.pop_back();
+    if (m_move_count > START_LEN)
+        m_body.pop_back();
+    m_move_count++;
 }
 
 Snake::Snake(TilePosition start, Sprite* head, Sprite* body, Screen* screen)
@@ -44,6 +48,7 @@ Snake::Snake(TilePosition start, Sprite* head, Sprite* body, Screen* screen)
     m_head_sprite = head;
     m_body_sprite = body;
     set_direction(Direction::Up);
+    m_move_count = 0;
 }
 
 void Snake::set_direction(Direction direction)

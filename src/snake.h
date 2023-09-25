@@ -21,6 +21,7 @@ class Snake
     Sprite* m_head_sprite;
     Sprite* m_body_sprite;
     Screen* m_screen;
+    int m_move_count;
 };
 
 #endif
