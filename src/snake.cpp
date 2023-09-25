@@ -1,5 +1,7 @@
 #include "snake.h"
 
+#include <cassert>
+
 void Snake::advance(void)
 {
     TilePosition delta = TilePosition(0, 0);
@@ -51,22 +53,15 @@ void Snake::set_direction(Direction direction)
 void Snake::render(Screen* screen, PixelDimension tile_size)
 {
     auto it = m_body.begin();
-    PixelPosition px_pos;
+
+    assert(m_body.size() > 0);
+
+    m_head_sprite->render(it->to_pixelwise(tile_size), screen);
+    it++;
 
     while (it != m_body.end())
     {
-        px_pos.x = it->x * tile_size.w;
-        px_pos.y = it->y * tile_size.h;
-        m_body_sprite->render(px_pos, screen);
+        m_body_sprite->render(it->to_pixelwise(tile_size), screen);
         it++;
-    }
-
-    auto head = m_body.begin();
-    PixelPosition head_pos;
-    if (head != m_body.end())
-    {
-        head_pos.x = head->x * tile_size.w;
-        head_pos.y = head->y * tile_size.h;
-        m_head_sprite->render(head_pos, screen);
     }
 }
