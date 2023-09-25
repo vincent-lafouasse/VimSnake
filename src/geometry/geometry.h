@@ -39,10 +39,16 @@ class Position
     bool operator==(const Position& other) const;
 };
 
+class TilePosition;
+class PixelPosition;
+class TileDimension;
+class PixelDimension;
+
 class TilePosition : public Position
 {
    public:
     TilePosition(int w = 0, int h = 0) : Position(w, h) {}
+    PixelPosition to_pixelwise(const PixelDimension tile_size);
 };
 
 class PixelPosition : public Position
