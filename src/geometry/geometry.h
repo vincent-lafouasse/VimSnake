@@ -9,6 +9,8 @@ enum class Direction
     Left,
 };
 
+Direction opposite_direction(Direction direction);
+
 class Dimension
 {
    public:

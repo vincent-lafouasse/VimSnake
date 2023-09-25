@@ -29,7 +29,6 @@ int main(void)
     body_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
     Snake snake = Snake(TilePosition(0, 0), &head_block, &body_block, &screen);
-    snake.set_direction(Direction::Down);
 
     const PixelDimension grid_size = head_block.m_dimension;
 

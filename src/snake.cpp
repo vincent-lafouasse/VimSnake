@@ -47,12 +47,14 @@ Snake::Snake(TilePosition start, Sprite* head, Sprite* body, Screen* screen)
     m_body.push_front(start);
     m_head_sprite = head;
     m_body_sprite = body;
-    set_direction(Direction::Up);
+    m_direction = Direction::Down;
     m_move_count = 0;
 }
 
 void Snake::set_direction(Direction direction)
 {
+    if (direction == opposite_direction(m_direction))
+        return;
     m_direction = direction;
 }
 
