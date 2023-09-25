@@ -36,7 +36,7 @@ void Snake::advance(void)
     TilePosition new_head =
         TilePosition(old_head.x + delta.x, old_head.y + delta.y);
     m_body.push_front(new_head);
-    if (m_move_count > START_LEN)
+    if (m_move_count >= START_LEN - 1)
         m_body.pop_back();
     m_move_count++;
 }
