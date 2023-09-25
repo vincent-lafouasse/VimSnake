@@ -3,23 +3,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h> // Ajout de l'en-tête SDL_image.h
+
 #include "geometry.h"
 #include "render.h"
 #include "snake.h"
 
 #define TARGET_FPS 100
-
-#define TILE_SIZE 50
-
-#define NICE_BLUE 33, 118, 174, 255
-
-#define GREEN_TILE_PNG "./assets/kenney_pixel-shmup/Tiles/tile_0110.png"
-#define BROWN_TILE_PNG "./assets/kenney_pixel-shmup/Tiles/tile_0116.png"
+#define TILE_SIZE 30
+#define NICE_BLUE 45, 38, 62, 255
+#define GREEN_TILE_PNG "./assets/trex_pixel/snake_head_right.png"
+#define BROWN_TILE_PNG "./assets/trex_pixel/snake_body.png"
 
 void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
+    // Initialisation du sous-système SDL2_image
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC | SDL_INIT_SENSOR | SDL_INIT_NOPARACHUTE) != 0)
+    {
+        fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
+        return EXIT_FAILURE;
+    }
+
+    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
+    {
+        fprintf(stderr, "IMG_Init failed: %s\n", IMG_GetError());
+        return EXIT_FAILURE;
+    }
+
     Screen screen = Screen(WIDTH, HEIGHT);
 
     Sprite head_block = Sprite(GREEN_TILE_PNG, &screen);
@@ -37,6 +50,14 @@ int main(void)
     uint32_t frame_beginning_tick;
     bool running = true;
     uint64_t frame_count = 1;
+
+    // Chargement de l'image de fond
+    SDL_Texture *backgroundTexture = IMG_LoadTexture(screen.m_renderer, "./assets/trex_pixel/background.png");
+    if (!backgroundTexture)
+    {
+        fprintf(stderr, "Failed to load background image: %s\n", IMG_GetError());
+        return EXIT_FAILURE;
+    }
 
     while (running)
     {
@@ -76,6 +97,9 @@ int main(void)
         SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
         SDL_RenderClear(screen.m_renderer);
 
+        // Rendre l'image de fond
+        SDL_RenderCopy(screen.m_renderer, backgroundTexture, NULL, NULL);
+
         snake.render(&screen, grid_size);
 
         screen.show();
@@ -84,8 +108,11 @@ int main(void)
         frame_count++;
     }
 
+    // Libération de la texture de l'image de fond
+    SDL_DestroyTexture(backgroundTexture);
+    IMG_Quit();
     SDL_Quit();
-    return (EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
 
 void cap_fps(uint32_t frame_beginning_tick, int target_fps)
