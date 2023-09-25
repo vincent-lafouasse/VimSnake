@@ -37,8 +37,9 @@ void Snake::advance(void)
     // m_body.pop_back();
 }
 
-Snake::Snake(TilePosition start, Sprite* head, Sprite* body)
+Snake::Snake(TilePosition start, Sprite* head, Sprite* body, Screen* screen)
 {
+    m_screen = screen;
     m_body.push_front(start);
     m_head_sprite = head;
     m_body_sprite = body;
@@ -50,18 +51,18 @@ void Snake::set_direction(Direction direction)
     m_direction = direction;
 }
 
-void Snake::render(Screen* screen, PixelDimension tile_size)
+void Snake::render(PixelDimension tile_size)
 {
     auto it = m_body.begin();
 
     assert(m_body.size() > 0);
 
-    m_head_sprite->render(it->to_pixelwise(tile_size), screen);
+    m_head_sprite->render(it->to_pixelwise(tile_size), m_screen);
     it++;
 
     while (it != m_body.end())
     {
-        m_body_sprite->render(it->to_pixelwise(tile_size), screen);
+        m_body_sprite->render(it->to_pixelwise(tile_size), m_screen);
         it++;
     }
 }

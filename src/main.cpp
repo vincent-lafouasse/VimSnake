@@ -28,7 +28,7 @@ int main(void)
     Sprite body_block = Sprite(BROWN_TILE_PNG, &screen);
     body_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
-    Snake snake = Snake(TilePosition(0, 0), &head_block, &body_block);
+    Snake snake = Snake(TilePosition(0, 0), &head_block, &body_block, &screen);
     snake.set_direction(Direction::Down);
 
     const PixelDimension grid_size = head_block.m_dimension;
@@ -76,7 +76,7 @@ int main(void)
         SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
         SDL_RenderClear(screen.m_renderer);
 
-        snake.render(&screen, grid_size);
+        snake.render(grid_size);
 
         screen.show();
 
