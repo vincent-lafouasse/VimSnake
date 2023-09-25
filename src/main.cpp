@@ -20,7 +20,7 @@ void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
-    Screen screen = Screen(WIDTH, HEIGHT);
+    Screen screen = Screen(WIDTH, HEIGHT, TILE_SIZE);
 
     Sprite head_block = Sprite(GREEN_TILE_PNG, &screen);
     head_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
