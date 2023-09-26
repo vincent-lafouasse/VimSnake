@@ -1,10 +1,12 @@
 #include "screen.h"
 #include <iostream>
 
-Screen::Screen(int width, int height)
+Screen::Screen(int width, int height, int tile_size)
 {
     const int SCREEN_X_POS = 0;
     const int SCREEN_Y_POS = 0;
+
+    m_tile_size = tile_size;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {

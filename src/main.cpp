@@ -20,20 +20,8 @@ void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
-    // Initialisation du sous-système SDL2_image
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC | SDL_INIT_SENSOR | SDL_INIT_NOPARACHUTE) != 0)
-    {
-        fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
-        return EXIT_FAILURE;
-    }
 
-    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
-    {
-        fprintf(stderr, "IMG_Init failed: %s\n", IMG_GetError());
-        return EXIT_FAILURE;
-    }
-
-    Screen screen = Screen(WIDTH, HEIGHT);
+    Screen screen = Screen(WIDTH, HEIGHT, TILE_SIZE);
 
     Sprite head_block = Sprite(GREEN_TILE_PNG, &screen);
     head_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
@@ -41,8 +29,7 @@ int main(void)
     Sprite body_block = Sprite(BROWN_TILE_PNG, &screen);
     body_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
-    Snake snake = Snake(TilePosition(0, 0), &head_block, &body_block);
-    snake.set_direction(Direction::Down);
+    Snake snake = Snake(TilePosition(6, 9), &head_block, &body_block, &screen);
 
     const PixelDimension grid_size = head_block.m_dimension;
 
@@ -97,10 +84,7 @@ int main(void)
         SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
         SDL_RenderClear(screen.m_renderer);
 
-        // Rendre l'image de fond
-        SDL_RenderCopy(screen.m_renderer, backgroundTexture, NULL, NULL);
-
-        snake.render(&screen, grid_size);
+        snake.render(grid_size);
 
         screen.show();
 

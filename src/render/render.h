@@ -7,7 +7,7 @@
 #include "screen.h"
 #include "sprite.h"
 
-#define HEIGHT 600
+#define HEIGHT 1200
 #define WIDTH 800
 
 #endif

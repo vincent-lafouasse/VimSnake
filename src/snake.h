@@ -9,17 +9,19 @@
 class Snake
 {
    public:
-    Snake(TilePosition start, Sprite* head, Sprite* body);
+    Snake(TilePosition start, Sprite* head, Sprite* body, Screen* screen);
 
     void advance(void);
     void set_direction(Direction direction);
-    void render(Screen* screen, PixelDimension tile_size);
+    void render(PixelDimension tile_size);
 
    private:
     Direction m_direction;
     std::deque<TilePosition> m_body;
     Sprite* m_head_sprite;
     Sprite* m_body_sprite;
+    Screen* m_screen;
+    int m_move_count;
 };
 
 #endif
