@@ -28,7 +28,7 @@ int main(void)
     Sprite body_block = Sprite(BROWN_TILE_PNG, &screen);
     body_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
-    Snake snake = Snake(TilePosition(0, 0), &head_block, &body_block, &screen);
+    Snake snake = Snake(TilePosition(6, 9), &head_block, &body_block, &screen);
 
     const PixelDimension grid_size = head_block.m_dimension;
 
