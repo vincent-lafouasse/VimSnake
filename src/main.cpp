@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h> // Ajout de l'en-tête SDL_image.h
-
 #include "geometry.h"
 #include "render.h"
 #include "snake.h"
@@ -20,7 +17,6 @@ void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
-
     Screen screen = Screen(WIDTH, HEIGHT, TILE_SIZE);
 
     Sprite head_block = Sprite(GREEN_TILE_PNG, &screen);
@@ -29,9 +25,7 @@ int main(void)
     Sprite body_block = Sprite(BROWN_TILE_PNG, &screen);
     body_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
-    Snake snake = Snake(TilePosition(6, 9), &head_block, &body_block, &screen);
-
-    const PixelDimension grid_size = head_block.m_dimension;
+    Snake snake = Snake(TilePosition(6, 9), &head_block, &body_block);
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
@@ -39,10 +33,12 @@ int main(void)
     uint64_t frame_count = 1;
 
     // Chargement de l'image de fond
-    SDL_Texture *backgroundTexture = IMG_LoadTexture(screen.m_renderer, "./assets/trex_pixel/background.png");
+    SDL_Texture* backgroundTexture = IMG_LoadTexture(
+        screen.m_renderer, "./assets/trex_pixel/background.png");
     if (!backgroundTexture)
     {
-        fprintf(stderr, "Failed to load background image: %s\n", IMG_GetError());
+        fprintf(stderr, "Failed to load background image: %s\n",
+                IMG_GetError());
         return EXIT_FAILURE;
     }
 
@@ -84,7 +80,7 @@ int main(void)
         SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
         SDL_RenderClear(screen.m_renderer);
 
-        snake.render(grid_size);
+        snake.render(&screen);
 
         screen.show();
 
