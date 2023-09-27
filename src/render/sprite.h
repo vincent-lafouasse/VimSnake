@@ -19,6 +19,7 @@ class Sprite
     ~Sprite();
 
     void render(PixelPosition position, Screen* screen);
+    void render(PixelPosition position, float angle, Screen* screen);
 };
 
 #endif

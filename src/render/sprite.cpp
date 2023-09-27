@@ -27,6 +27,13 @@ void Sprite::render(PixelPosition position, Screen* screen)
     SDL_RenderCopy(screen->m_renderer, m_texture, NULL, &dst_rect);
 }
 
+void Sprite::render(PixelPosition position, float angle, Screen* screen)
+{
+    SDL_Rect dst_rect = {position.x, position.y, m_dimension.w, m_dimension.h};
+    SDL_RenderCopyEx(screen->m_renderer, m_texture, NULL, &dst_rect, angle,
+                     NULL, SDL_FLIP_NONE);
+}
+
 Sprite::~Sprite(void)
 {
     SDL_DestroyTexture(m_texture);
