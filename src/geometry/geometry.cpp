@@ -34,3 +34,7 @@ TilePosition TilePosition::operator+(const TilePosition& other) const
 {
     return TilePosition(x + other.x, y + other.y);
 }
+TilePosition TilePosition::operator-(const TilePosition& other) const
+{
+    return TilePosition(x - other.x, y - other.y);
+}

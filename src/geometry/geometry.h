@@ -52,6 +52,7 @@ class TilePosition : public Position
     TilePosition(int w = 0, int h = 0) : Position(w, h) {}
     PixelPosition to_pixelwise(const PixelDimension tile_size);
     TilePosition operator+(const TilePosition& other) const;
+    TilePosition operator-(const TilePosition& other) const;
 };
 
 class PixelPosition : public Position
