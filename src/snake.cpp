@@ -32,13 +32,14 @@ void Snake::advance(void)
         }
     }
 
-    TilePosition old_head = m_body.front();
-    TilePosition new_head =
-        TilePosition(old_head.x + delta.x, old_head.y + delta.y);
-    m_body.push_front(new_head);
-    if (m_move_count >= START_LEN - 1)
-        m_body.pop_back();
+    m_body.push_front(m_body.front() + delta);
+
     m_move_count++;
+
+    if (m_move_count >= START_LEN)
+    {
+        m_body.pop_back();
+    }
 }
 
 Snake::Snake(TilePosition start, Sprite* head, Sprite* body)
