@@ -18,10 +18,10 @@ void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
 int main(void)
 {
-    Screen screen = Screen(WIDTH, HEIGHT, TILE_SIZE);
+    Screen screen(WIDTH, HEIGHT, TILE_SIZE);
 
-    SnakeRenderer sr(&screen);
-    Snake snake = Snake(TilePosition(6, 9));
+    SnakeRenderer snake_renderer(&screen);
+    Snake snake(TilePosition(6, 9));
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
@@ -66,7 +66,7 @@ int main(void)
         Color::set_render_color(ColorID::NICE_BLUE, &screen);
         SDL_RenderClear(screen.m_renderer);
 
-        sr.render(&snake, &screen);
+        snake_renderer.render(&snake, &screen);
 
         screen.show();
 
