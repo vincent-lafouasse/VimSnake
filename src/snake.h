@@ -6,16 +6,14 @@
 
 #include <deque>
 
-class Snake
+struct Snake
 {
-   public:
     Snake(TilePosition start, Sprite* head, Sprite* body);
 
     void advance(void);
     void set_direction(Direction direction);
     void render(Screen* screen);
 
-   private:
     Direction m_direction;
     std::deque<TilePosition> m_body;
     Sprite* m_head_sprite;
