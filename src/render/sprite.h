@@ -10,7 +10,6 @@
 class Sprite
 {
    public:
-    SDL_Surface* m_surface;
     SDL_Texture* m_texture;
     PixelDimension m_dimension;
 
