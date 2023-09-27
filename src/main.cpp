@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "color.h"
 #include "geometry.h"
 #include "render.h"
 #include "snake.h"
 
 #define TARGET_FPS 100
 #define TILE_SIZE 30
-#define NICE_BLUE 45, 38, 62, 255
+
 #define GREEN_TILE_PNG "./assets/trex_pixel/snake_head_right.png"
 #define BROWN_TILE_PNG "./assets/trex_pixel/snake_body.png"
 
@@ -77,7 +78,7 @@ int main(void)
             snake.advance();
         }
 
-        SDL_SetRenderDrawColor(screen.m_renderer, NICE_BLUE);
+        Color::set_render_color(ColorID::NICE_BLUE, &screen);
         SDL_RenderClear(screen.m_renderer);
 
         snake.render(&screen);
