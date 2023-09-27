@@ -9,10 +9,12 @@
 #include "snake.h"
 
 #define TARGET_FPS 100
-#define TILE_SIZE 30
+#define TILE_SIZE 50
 
-#define GREEN_TILE_PNG "./assets/trex_pixel/snake_head_right.png"
-#define BROWN_TILE_PNG "./assets/trex_pixel/snake_body.png"
+#define FRAMES_PER_TICK 50
+
+#define HEAD_PNG "./assets/trex_pixel/snake_head_right.png"
+#define BODY_PNG "./assets/trex_pixel/snake_body.png"
 
 void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
@@ -20,10 +22,10 @@ int main(void)
 {
     Screen screen = Screen(WIDTH, HEIGHT, TILE_SIZE);
 
-    Sprite head_block = Sprite(GREEN_TILE_PNG, &screen);
+    Sprite head_block = Sprite(HEAD_PNG, &screen);
     head_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
-    Sprite body_block = Sprite(BROWN_TILE_PNG, &screen);
+    Sprite body_block = Sprite(BODY_PNG, &screen);
     body_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
 
     Snake snake = Snake(TilePosition(6, 9), &head_block, &body_block);
@@ -31,19 +33,9 @@ int main(void)
     SDL_Event event;
     uint32_t frame_beginning_tick;
     bool running = true;
-    uint64_t frame_count = 1;
+    uint64_t frame_count = 0;
 
-    // Chargement de l'image de fond
-    SDL_Texture* backgroundTexture = IMG_LoadTexture(
-        screen.m_renderer, "./assets/trex_pixel/background.png");
-    if (!backgroundTexture)
-    {
-        fprintf(stderr, "Failed to load background image: %s\n",
-                IMG_GetError());
-        return EXIT_FAILURE;
-    }
-
-    while (running)
+    while (running && ++frame_count)
     {
         frame_beginning_tick = SDL_GetTicks();
         if (SDL_PollEvent(&event))
@@ -73,7 +65,7 @@ int main(void)
             }
         }
 
-        if (frame_count % 50 == 0)
+        if (frame_count % FRAMES_PER_TICK == 0)
         {
             snake.advance();
         }
@@ -86,11 +78,8 @@ int main(void)
         screen.show();
 
         cap_fps(frame_beginning_tick, TARGET_FPS);
-        frame_count++;
     }
 
-    // Libération de la texture de l'image de fond
-    SDL_DestroyTexture(backgroundTexture);
     IMG_Quit();
     SDL_Quit();
     return EXIT_SUCCESS;
