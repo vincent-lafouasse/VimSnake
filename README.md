@@ -9,6 +9,12 @@ A classic Snake game played with `hjkl`
    - or `brew install sdl2 sdl2_image` on macOS
 2. `make run`
 
+## Special thanks
+
+Special thanks to @MortalTrex aka `rbalazs` for the nice images and for releasing them under a TBD license
+
+Thank you to `kenney.nl` as well for providing placeholder CC0 assets in the meantime
+
 ## License
 ```
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
