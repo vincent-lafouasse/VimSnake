@@ -1,5 +1,7 @@
 #include "sprite.h"
 
+#include <iostream>
+
 Sprite::Sprite()
 {
     m_surface = nullptr;
@@ -29,4 +31,6 @@ Sprite::~Sprite(void)
 {
     SDL_DestroyTexture(m_texture);
     SDL_FreeSurface(m_surface);
+
+    std::cout << "freeing sprite" << std::endl;
 }

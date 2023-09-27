@@ -7,14 +7,12 @@
 #include "geometry.h"
 #include "render.h"
 #include "snake.h"
+#include "snake_renderer.h"
 
 #define TARGET_FPS 100
 #define TILE_SIZE 50
 
 #define FRAMES_PER_TICK 50
-
-#define HEAD_PNG "./assets/trex_pixel/snake_head_right.png"
-#define BODY_PNG "./assets/trex_pixel/snake_body.png"
 
 void cap_fps(uint32_t frame_beginning_tick, int target_fps);
 
@@ -22,13 +20,8 @@ int main(void)
 {
     Screen screen = Screen(WIDTH, HEIGHT, TILE_SIZE);
 
-    Sprite head_block = Sprite(HEAD_PNG, &screen);
-    head_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
-
-    Sprite body_block = Sprite(BODY_PNG, &screen);
-    body_block.m_dimension = PixelDimension(TILE_SIZE, TILE_SIZE);
-
-    Snake snake = Snake(TilePosition(6, 9), &head_block, &body_block);
+    SnakeRenderer sr(&screen);
+    Snake snake = Snake(TilePosition(6, 9));
 
     SDL_Event event;
     uint32_t frame_beginning_tick;
@@ -73,7 +66,7 @@ int main(void)
         Color::set_render_color(ColorID::NICE_BLUE, &screen);
         SDL_RenderClear(screen.m_renderer);
 
-        snake.render(&screen);
+        sr.render(&snake, &screen);
 
         screen.show();
 

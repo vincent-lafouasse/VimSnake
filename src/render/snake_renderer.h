@@ -6,10 +6,11 @@
 
 struct SnakeRenderer
 {
-    SnakeRenderer();
     SnakeRenderer(Screen* screen);
+    ~SnakeRenderer();
+
     void render(Snake* snake, Screen* screen);
 
-    Sprite head;
-    Sprite body;
+    Sprite* head;
+    Sprite* body;
 };

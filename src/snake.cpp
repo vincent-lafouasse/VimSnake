@@ -42,11 +42,9 @@ void Snake::advance(void)
     }
 }
 
-Snake::Snake(TilePosition start, Sprite* head, Sprite* body)
+Snake::Snake(TilePosition start)
 {
     m_body.push_front(start);
-    m_head_sprite = head;
-    m_body_sprite = body;
     m_direction = Direction::Down;
     m_move_count = 0;
 }
@@ -56,20 +54,4 @@ void Snake::set_direction(Direction direction)
     if (direction == opposite_direction(m_direction))
         return;
     m_direction = direction;
-}
-
-void Snake::render(Screen* screen)
-{
-    auto it = m_body.begin();
-
-    assert(m_body.size() > 0);
-
-    m_head_sprite->render(it->to_pixelwise(screen->m_tile_size), screen);
-    it++;
-
-    while (it != m_body.end())
-    {
-        m_body_sprite->render(it->to_pixelwise(screen->m_tile_size), screen);
-        it++;
-    }
 }
