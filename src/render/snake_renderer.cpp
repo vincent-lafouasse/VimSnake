@@ -1,4 +1,5 @@
 #include "snake_renderer.h"
+#include <cassert>
 
 #define HEAD_PNG "./assets/trex_pixel/snake_head_right.png"
 #define BODY_PNG "./assets/trex_pixel/snake_body.png"
